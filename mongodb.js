@@ -20,6 +20,41 @@ MongoClient.connect(
     // Connection for specific database ("task-manager")
     const db = client.db(databaseName);
 
+    // Query for individual user (by name)
+    // db.collection("users").findOne({ name: "Adam" }, (error, user) => {
+    //   if (error) {
+    //     return console.log("Unable to fetch user...");
+    //   }
+
+    //   console.log(user);
+    // });
+
+    // Query for individual user (by user ID)
+    // db.collection("users").findOne(
+    //   { _id: new ObjectId("61bb82d4519b2bd0cf50ceb8") },
+    //   (error, user) => {
+    //     if (error) {
+    //       return console.log("Unable to fetch user...");
+    //     }
+
+    //     console.log(user);
+    //   }
+    // );
+
+    // Find users with specific criteria (age: 30 in this case)
+    // db.collection("users")
+    //   .find({ age: 30 })
+    //   .toArray((error, users) => {
+    //     console.log(users);
+    //   });
+
+    db.collection("tasks")
+      .find({ isCompleted: false })
+      .toArray((error, tasks) => {
+        console.log(tasks);
+      });
+
+    // EXAMPLE CODE (IGNORE)
     /**
      * Insert one document into db = insertOne()
      * Insert multiple documents into db = insertMany()
