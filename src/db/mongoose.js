@@ -8,9 +8,15 @@ mongoose.connect("mongodb://127.0.0.1:27017/task-manager-api", {
 const User = mongoose.model("User", {
   name: {
     type: String,
+    required: true,
   },
   age: {
     type: Number,
+    validate(value) {
+      if (value < 0) {
+        throw new Error("Value must be a positive number.");
+      }
+    },
   },
 });
 
@@ -34,24 +40,25 @@ adam
 const Task = mongoose.model("Task", {
   description: {
     type: String,
+    required: true,
   },
   isCompleted: {
     type: Boolean,
   },
 });
 
-// Instantiate new User
+// Instantiate new Task
 const task1 = new Task({
   description: "Task 1",
   isCompleted: false,
 });
 
 // Save Task 1 to database
-task1
-  .save()
-  .then(() => {
-    console.log(task1);
-  })
-  .catch((error) => {
-    console.log("Error", error);
-  });
+// task1
+//   .save()
+//   .then(() => {
+//     console.log(task1);
+//   })
+//   .catch((error) => {
+//     console.log("Error", error);
+//   });
