@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "author": "Adam Friedman",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.17.1",
     "mongodb": "^4.2.2",
     "mongoose": "^6.1.2",
     "validator": "^13.7.0"
