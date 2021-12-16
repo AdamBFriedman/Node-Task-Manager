@@ -1,10 +1,12 @@
-// Install mongodb driver (this allows us to connect to a mongo db database from node.js)
-const mongodb = require("mongodb");
-const MongoClient = mongodb.MongoClient;
+const { MongoClient, ObjectID, ObjectId } = require("mongodb");
 
 // Define connection url
 const connectionURL = "mongodb://127.0.0.1:27017";
 const databaseName = "task-manager";
+
+// const id = new ObjectId();
+// console.log(id);
+// console.log(id.getTimestamp());
 
 // Connect to server
 MongoClient.connect(
@@ -26,8 +28,8 @@ MongoClient.connect(
     // Add one user to database
     // db.collection("users").insertOne(
     //   {
-    //     name: "Adam",
-    //     age: 36,
+    //     name: "Gary",
+    //     age: 68,
     //   },
     //   (error, result) => {
     //     if (error) {
@@ -60,28 +62,28 @@ MongoClient.connect(
     // );
 
     // Add tasks to database
-    db.collection("tasks").insertMany(
-      [
-        {
-          description: "Take trash out",
-          isCompleted: false,
-        },
-        {
-          description: "Feed Simba",
-          isCompleted: true,
-        },
-        {
-          description: "Clean litter",
-          isCompleted: true,
-        },
-      ],
-      (error, result) => {
-        if (error) {
-          return console.log("Unable to insert documents.");
-        }
+    // db.collection("tasks").insertMany(
+    //   [
+    //     {
+    //       description: "Take trash out",
+    //       isCompleted: false,
+    //     },
+    //     {
+    //       description: "Feed Simba",
+    //       isCompleted: true,
+    //     },
+    //     {
+    //       description: "Clean litter",
+    //       isCompleted: true,
+    //     },
+    //   ],
+    //   (error, result) => {
+    //     if (error) {
+    //       return console.log("Unable to insert documents.");
+    //     }
 
-        console.log(result.insertedIds);
-      }
-    );
+    //     console.log(result.insertedIds);
+    //   }
+    // );
   }
 );
