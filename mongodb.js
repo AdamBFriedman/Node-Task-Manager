@@ -20,6 +20,54 @@ MongoClient.connect(
     // Connection for specific database ("task-manager")
     const db = client.db(databaseName);
 
+    // Update all tasks
+    db.collection("tasks")
+      .updateMany(
+        {
+          isCompleted: false,
+        },
+        // Set all tasks to complete
+        {
+          $set: {
+            isCompleted: true,
+          },
+        }
+      )
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    // Update a single user
+    // db.collection("users")
+    //   .updateOne(
+    //     {
+    //       _id: new ObjectId("61bb82d4519b2bd0cf50ceb8"),
+    //     },
+    //     // Set new name
+    //     // {
+    //     //   $set: {
+    //     //     name: "Kramer",
+    //     //   },
+    //     // }
+
+    //     // Increment age
+    //     {
+    //       $inc: {
+    //         // 1 for increment and -1 for decrement
+    //         age: -1,
+    //       },
+    //     }
+    //   )
+    //   .then((result) => {
+    //     console.log(result);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+
     // Query for individual user (by name)
     // db.collection("users").findOne({ name: "Adam" }, (error, user) => {
     //   if (error) {
@@ -48,11 +96,12 @@ MongoClient.connect(
     //     console.log(users);
     //   });
 
-    db.collection("tasks")
-      .find({ isCompleted: false })
-      .toArray((error, tasks) => {
-        console.log(tasks);
-      });
+    // Find tasks that are not completed
+    // db.collection("tasks")
+    //   .find({ isCompleted: false })
+    //   .toArray((error, tasks) => {
+    //     console.log(tasks);
+    //   });
 
     // EXAMPLE CODE (IGNORE)
     /**
