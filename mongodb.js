@@ -20,25 +20,49 @@ MongoClient.connect(
     // Connection for specific database ("task-manager")
     const db = client.db(databaseName);
 
-    // Update all tasks
+    // Delete trash task
     db.collection("tasks")
-      .updateMany(
-        {
-          isCompleted: false,
-        },
-        // Set all tasks to complete
-        {
-          $set: {
-            isCompleted: true,
-          },
-        }
-      )
+      .deleteOne({
+        description: "Take trash out",
+      })
       .then((result) => {
         console.log(result);
       })
       .catch((error) => {
         console.log(error);
       });
+
+    // Delete all users whose age is 67
+    // db.collection("users")
+    //   .deleteMany({
+    //     age: 67,
+    //   })
+    //   .then((result) => {
+    //     console.log(result);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+
+    // Update all tasks
+    // db.collection("tasks")
+    //   .updateMany(
+    //     {
+    //       isCompleted: false,
+    //     },
+    //     // Set all tasks to complete
+    //     {
+    //       $set: {
+    //         isCompleted: true,
+    //       },
+    //     }
+    //   )
+    //   .then((result) => {
+    //     console.log(result);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
 
     // Update a single user
     // db.collection("users")
