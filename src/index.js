@@ -46,6 +46,37 @@ app.get("/users/:id", async (request, response) => {
   }
 });
 
+// Update user
+app.patch("/users/:id", async (request, response) => {
+  const updates = Object.keys(request.body);
+  const allowedUpdates = ["name", "email", "password", "age"];
+  const isValidOperation = updates.every((update) => {
+    return allowedUpdates.includes(update);
+  });
+
+  if (!isValidOperation) {
+    return response
+      .status(400)
+      .send({ Error: "One of your arguments is not correct." });
+  }
+  const _id = request.params.id;
+  const _body = request.body;
+
+  try {
+    const user = await User.findByIdAndUpdate(_id, _body, {
+      new: true,
+      runValidators: true,
+    });
+    if (!user) {
+      return response.status(404).send();
+    }
+
+    response.status(201).send(user);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
 // Create task
 app.post("/tasks", async (request, response) => {
   const task = new Task(request.body);
@@ -76,6 +107,37 @@ app.get("/tasks/:id", async (request, response) => {
     if (!task) {
       return response.status(404).send();
     }
+    response.status(201).send(task);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
+// Update task
+app.patch("/tasks/:id", async (request, response) => {
+  const updates = Object.keys(request.body);
+  const allowedUpdates = ["description", "isCompleted"];
+  const isValidOperation = updates.every((update) => {
+    return allowedUpdates.includes(update);
+  });
+
+  if (!isValidOperation) {
+    return response
+      .status(400)
+      .send({ Error: "One of your arguments is not correct." });
+  }
+  const _id = request.params.id;
+  const _body = request.body;
+
+  try {
+    const task = await Task.findByIdAndUpdate(_id, _body, {
+      new: true,
+      runValidators: true,
+    });
+    if (!task) {
+      return response.status(404).send();
+    }
+
     response.status(201).send(task);
   } catch (error) {
     response.status(500).send(error);
