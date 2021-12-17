@@ -14,6 +14,21 @@ router.post("/users", async (request, response) => {
   }
 });
 
+// Log user in
+router.post("/users/login", async (request, response) => {
+  const _email = request.body.email;
+  const _password = request.body.password;
+  try {
+    const user = await User.findByCredentials(
+      request.body.email,
+      request.body.password
+    );
+    response.send(user);
+  } catch (error) {
+    response.status(400).send(error);
+  }
+});
+
 // Fetch all users
 router.get("/users", async (request, response) => {
   try {
@@ -63,10 +78,7 @@ router.patch("/users/:id", async (request, response) => {
     });
 
     await user.save();
-    // const user = await User.findByIdAndUpdate(_id, _body, {
-    //   new: true,
-    //   runValidators: true,
-    // });
+
     if (!user) {
       return response.status(404).send();
     }
