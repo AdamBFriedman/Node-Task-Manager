@@ -9,6 +9,7 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
+// Create user
 app.post("/users", (request, response) => {
   const user = new User(request.body);
 
@@ -22,6 +23,33 @@ app.post("/users", (request, response) => {
     });
 });
 
+// Fetch all users
+app.get("/users", (request, response) => {
+  User.find({})
+    .then((users) => {
+      response.send(users);
+    })
+    .catch((error) => {
+      response.status(500).send();
+    });
+});
+
+// Fetch one user
+app.get("/users/:id", (request, response) => {
+  const _id = request.params.id;
+  User.findById(_id)
+    .then((user) => {
+      if (!user) {
+        return response.status(404).send();
+      }
+      response.send(user);
+    })
+    .catch((error) => {
+      response.status(500).send();
+    });
+});
+
+// Create task
 app.post("/tasks", (request, response) => {
   const task = new Task(request.body);
 
